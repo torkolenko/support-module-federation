@@ -1,0 +1,52 @@
+.header {
+  position: fixed;
+  width: 100%;
+  min-width: 300px;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  &__body {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: end;
+    height: 60px;
+    align-items: center;
+    &-svg-container {
+      min-width: 35px;
+      display: flex;
+      justify-content: space-between;
+      margin-right: 10px;
+    }
+    &-pages {
+      font-size: 16px;
+      font-weight: 400;
+      color: #4d4e50;
+      margin-right: 12px;
+    }
+    &-button {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 7px;
+      height: 36px;
+      width: 120px;
+      border: 0;
+      background-color: #1f9bcf;
+      padding: 0;
+      color: white;
+      font-size: 15px;
+      font-weight: 600;
+      margin-right: 21px;
+
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+    }
+    &-svg {
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+    }
+  }
+}
