@@ -1,7 +1,16 @@
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
 import { BuildOptions } from "./types/types";
 
-export function buildDevServer({ port }: BuildOptions): DevServerConfiguration {
+export interface EnvVariables {
+  SUPPORT_API_URL: string;
+}
+
+export function buildDevServer(
+  env: EnvVariables,
+  { port }: BuildOptions
+): DevServerConfiguration {
+  const SUPPORT_API_URL = env.SUPPORT_API_URL ?? "http://localhost:5080";
+
   return {
     historyApiFallback: true,
     hot: true,
@@ -20,7 +29,7 @@ export function buildDevServer({ port }: BuildOptions): DevServerConfiguration {
     proxy: {
       "/api": {
         context: ["/api"],
-        target: "http://localhost:5080",
+        target: SUPPORT_API_URL,
         pathRewrite: { "^/api": "" },
         secure: false,
       },

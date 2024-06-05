@@ -3,12 +3,13 @@ import { BuildMode, BuildPaths, buildWebpack } from "@packages/build-config";
 import path from "path";
 import packageJson from "./package.json";
 
-interface EnvVariables {
+export interface EnvVariables {
   mode: BuildMode;
   port: number;
   analyzer?: boolean;
   SUPPORT_REMOTE_URL?: string;
   ADMIN_REMOTE_URL?: string;
+  SUPPORT_API_URL?: string;
 }
 
 export default (env: EnvVariables) => {
