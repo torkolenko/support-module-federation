@@ -1,24 +1,12 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import {
-  fetchRequestsThunk,
-  fetchStatusesThunk,
-  fetchTypesThunk,
-} from "@/store/reducers/ActionCreators";
-import { useEffect } from "react";
+import { useAppSelector } from "@/hooks/redux";
+
 import styles from "./RequestsTable.module.scss";
 import { TableRow } from "@/components/tableRow/TableRow";
 
 export function RequestsTable() {
-  const dispatch = useAppDispatch();
   const { requests, isLoading, error } = useAppSelector(
     (state) => state.requestReducer
   );
-
-  useEffect(() => {
-    dispatch(fetchRequestsThunk({}));
-    dispatch(fetchTypesThunk());
-    dispatch(fetchStatusesThunk());
-  }, []);
 
   const tableHeaders = [
     "Номер запроса",

@@ -1,5 +1,5 @@
 export interface IPage {
-  requestsLimit: number;
+  onePageRequestsLimit: number;
   currentPage: number;
-  pagesCount: number;
+  requestsCount: number;
 }

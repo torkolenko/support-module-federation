@@ -17,7 +17,7 @@
       color: #6b7280;
       margin-right: 12px;
     }
-    &-button {
+    &-post-button {
       border-radius: 7.41px;
       height: 38px;
       width: 128px;
@@ -34,20 +34,20 @@
       }
     }
     &-svg {
-      &:hover {
-        opacity: 0.8;
-        cursor: pointer;
-      }
-      &-container {
+      &-btns-container {
         min-width: 35px;
         display: flex;
         justify-content: space-between;
         margin-right: 14px;
         width: 60px;
       }
-      &:hover {
-        opacity: 0.8;
-        cursor: pointer;
+      &-button {
+        &:hover:not([disabled]) {
+          opacity: 0.8;
+          cursor: pointer;
+        }
+        border: 0;
+        background-color: white;
       }
     }
   }
