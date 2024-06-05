@@ -26,7 +26,7 @@ export default (env: EnvVariables) => {
     mode: env.mode ?? "development",
     paths,
     analyzer: env.analyzer,
-    apiPath: apiPath,
+    apiPath,
   });
 
   config.plugins.push(

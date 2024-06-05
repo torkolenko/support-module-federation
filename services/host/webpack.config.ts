@@ -24,11 +24,14 @@ export default (env: EnvVariables) => {
   const SUPPORT_REMOTE_URL = env.SUPPORT_REMOTE_URL ?? "http://localhost:4201";
   const ADMIN_REMOTE_URL = env.ADMIN_REMOTE_URL ?? "http://localhost:4202";
 
+  const apiPath = env.SUPPORT_API_URL ?? "http://localhost:5080";
+
   const config: webpack.Configuration = buildWebpack({
     port: env.port ?? 4200,
     mode: env.mode ?? "development",
     paths,
     analyzer: env.analyzer,
+    apiPath,
   });
 
   config.plugins.push(
