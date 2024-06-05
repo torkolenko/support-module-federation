@@ -7,15 +7,18 @@ interface TableItemProps {
 }
 
 export function TableItem({ value, mode }: TableItemProps) {
-  let classNames: [string] = [styles.item];
+  let classNames: [string] = [styles.table__item];
 
   if (mode === "type") {
+    classNames.push(styles["d-inline"]);
+
     switch (value) {
       case "Ошибка":
         classNames.push(styles.red);
         break;
       case "Новая функциональность":
         classNames.push(styles.green);
+        classNames.push(styles["w-100"]);
         break;
       case "Улучшение":
         classNames.push(styles.green);
@@ -25,8 +28,10 @@ export function TableItem({ value, mode }: TableItemProps) {
         break;
     }
   }
-  console.log(mode, " + ", value, "+", classNames);
+
   if (mode === "status") {
+    classNames.push(styles["d-inline"]);
+
     switch (value) {
       case "В очереди":
         classNames.push(styles.red);
@@ -40,5 +45,9 @@ export function TableItem({ value, mode }: TableItemProps) {
     }
   }
 
-  return <td className={classNames.join(" ")}>{value}</td>;
+  return (
+    <td>
+      <div className={classNames.join(" ")}>{value}</div>
+    </td>
+  );
 }

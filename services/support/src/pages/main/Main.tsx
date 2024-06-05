@@ -5,8 +5,10 @@ import { RequestsTable } from "@/components/table/RequestsTable";
 function Main() {
   return (
     <div className={styles.container}>
-      <NavBar />
-      <RequestsTable />
+      <div className={styles.content}>
+        <NavBar />
+        <RequestsTable />
+      </div>
     </div>
   );
 }

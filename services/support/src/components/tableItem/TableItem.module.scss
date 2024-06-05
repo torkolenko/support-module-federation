@@ -1,6 +1,12 @@
-.item {
-  max-width: 81;
-  max-height: 25;
+.d-inline {
+  display: inline-block;
+}
+
+.table__item {
+  padding: 0 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .green {
@@ -16,4 +22,10 @@
 .red {
   background-color: #ff9d8f;
   color: #fd1e00;
+}
+
+@media (max-width: 1600px) {
+  .w-100 {
+    width: 100%;
+  }
 }

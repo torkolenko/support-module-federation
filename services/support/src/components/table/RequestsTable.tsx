@@ -34,7 +34,7 @@ export function RequestsTable() {
       {requests.length && (
         <table className={styles.table}>
           <thead>
-            <tr className={styles.table__container}>
+            <tr className={styles["table__header-container"]}>
               {tableHeaders.map((i) => {
                 return <th>{i}</th>;
               })}

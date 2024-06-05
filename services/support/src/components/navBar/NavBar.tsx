@@ -24,15 +24,18 @@ export function NavBar() {
             <LeftArrow
               as="button"
               onClick={() => dispatch(changeCurrentPage(currentPage - 1))}
-              width={13}
-              height={13}
+              width={14}
+              height={14}
+              fill="#6B7280"
               className={styles["header__body-svg"]}
             />
+            <use className="u1" href="#marker" />
             <RightArrow
               as="button"
               onClick={() => dispatch(changeCurrentPage(currentPage + 1))}
-              width={13}
-              height={13}
+              width={14}
+              height={14}
+              fill="#6B7280"
               className={styles["header__body-svg"]}
             />
           </div>

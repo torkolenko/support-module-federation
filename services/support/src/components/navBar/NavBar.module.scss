@@ -11,37 +11,40 @@
     justify-content: end;
     height: 60px;
     align-items: center;
-    &-svg-container {
-      min-width: 35px;
-      display: flex;
-      justify-content: space-between;
-      margin-right: 20px;
-    }
     &-pages {
       font-size: 16px;
       font-weight: 400;
-      color: #4d4e50;
+      color: #6b7280;
       margin-right: 12px;
     }
     &-button {
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      border-radius: 7px;
-      height: 36px;
-      width: 120px;
+      border-radius: 7.41px;
+      height: 38px;
+      width: 128px;
       border: 0;
-      background-color: #1f9bcf;
+      background-color: #0a8fdc;
       padding: 0;
       color: white;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 600;
-      margin-right: 21px;
-
+      margin-right: 23px;
       &:hover {
         opacity: 0.8;
         cursor: pointer;
       }
     }
     &-svg {
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+      &-container {
+        min-width: 35px;
+        display: flex;
+        justify-content: space-between;
+        margin-right: 14px;
+        width: 60px;
+      }
       &:hover {
         opacity: 0.8;
         cursor: pointer;
