@@ -7,6 +7,7 @@ interface EnvVariables {
   mode: BuildMode;
   port: number;
   analyzer?: boolean;
+  SUPPORT_API_URL: string;
 }
 
 export default (env: EnvVariables) => {
@@ -18,11 +19,14 @@ export default (env: EnvVariables) => {
     public: path.resolve(__dirname, "public"),
   };
 
+  const apiPath = env.SUPPORT_API_URL ?? "http://localhost:5080";
+
   const config: webpack.Configuration = buildWebpack({
     port: env.port ?? 4201,
     mode: env.mode ?? "development",
     paths,
     analyzer: env.analyzer,
+    apiPath: apiPath,
   });
 
   config.plugins.push(

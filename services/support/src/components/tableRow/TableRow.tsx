@@ -1,4 +1,5 @@
 import { IRequest } from "@/models/IRequest";
+import { TableItem } from "../tableItem/TableItem";
 
 interface TableRowProps {
   request: IRequest;
@@ -12,7 +13,7 @@ export function TableRow({ request }: TableRowProps) {
     .reverse()
     .join(".");
 
-  const itemArr = Object.values({
+  const requestValuesArr = Object.entries({
     id,
     type: type.name,
     description,
@@ -23,9 +24,9 @@ export function TableRow({ request }: TableRowProps) {
 
   return (
     <tr>
-      {itemArr.length &&
-        itemArr.map((item) => {
-          return <td key={item}>{item}</td>;
+      {requestValuesArr.length &&
+        requestValuesArr.map((value) => {
+          return <TableItem mode={value[0]} value={value[1]} key={value[0]} />;
         })}
     </tr>
   );
