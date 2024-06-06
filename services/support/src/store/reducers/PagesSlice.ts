@@ -10,7 +10,7 @@ interface PageState {
 const initialState: PageState = {
   page: {
     onePageRequestsLimit: 20,
-    requestsCount: 0,
+    requestsCount: 1,
     currentPage: 1,
   },
   isLoading: false,

@@ -19,7 +19,7 @@ export function RequestsTable() {
 
   return (
     <div className={styles.container}>
-      {requests.length && (
+      {requests.length ? (
         <table className={styles.table}>
           <thead>
             <tr className={styles["table__header-container"]}>
@@ -34,7 +34,7 @@ export function RequestsTable() {
             })}
           </tbody>
         </table>
-      )}
+      ) : undefined}
     </div>
   );
 }
