@@ -15,7 +15,7 @@ export function NavBar() {
   const [pagesCount, setPagesCount] = useState(0);
 
   useEffect(() => {
-    setPagesCount(Math.ceil(requestsCount / 15));
+    setPagesCount(Math.ceil(requestsCount / 13));
   }, [requestsCount, setPagesCount]);
 
   const changeCurrentPage = async (
@@ -23,7 +23,7 @@ export function NavBar() {
   ) => {
     const newPage = callback(currentPage);
 
-    await dispatch(fetchRequestsThunk({ limit: 15, page: newPage }));
+    await dispatch(fetchRequestsThunk({ limit: 13, page: newPage }));
 
     dispatch(setCurrentPage(newPage));
   };

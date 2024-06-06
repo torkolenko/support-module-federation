@@ -1,7 +1,7 @@
 import { useAppSelector } from "@/hooks/redux";
 
 import styles from "./RequestsTable.module.scss";
-import { TableRow } from "@/components/tableRow/TableRow";
+import { TableRow } from "@/components/table/tableRow/TableRow";
 
 export function RequestsTable() {
   const { requests, isLoading, error } = useAppSelector(

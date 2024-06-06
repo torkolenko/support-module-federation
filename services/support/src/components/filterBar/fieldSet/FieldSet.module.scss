@@ -1,0 +1,56 @@
+.fieldset {
+  margin-bottom: 9px;
+  margin-right: 4px;
+  margin-top: 9px;
+  border: 0;
+  padding: 0;
+  &__body-item {
+    display: flex;
+    align-items: center;
+    &-container {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 6px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+    &-radio {
+      margin: 0;
+    }
+    &-text {
+      padding-left: 8px;
+    }
+    &-input {
+      width: 80%;
+    }
+    &-svg-btn {
+      height: 20px;
+      width: 20px;
+      border: 0;
+      padding: 0;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.legend {
+  margin-bottom: 3px;
+  margin-right: 3px;
+  &__header {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
+
+.ml-2 {
+  margin-left: 4px;
+}

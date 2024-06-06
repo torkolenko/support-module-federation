@@ -40,7 +40,6 @@ export const fetchRequestsThunk = createAsyncThunk(
 
       dispatch(setRequestsCount(response.data.count));
 
-      response.data.rows.sort((a, b) => a.id - b.id);
       return response.data.rows;
     } catch (e) {
       return rejectWithValue("Не удалось загрузить");
