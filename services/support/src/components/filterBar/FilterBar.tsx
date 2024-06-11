@@ -4,36 +4,31 @@ import { useEffect, useState } from "react";
 import { fetchRequestsThunk } from "@/store/reducers/ActionCreators";
 
 import styles from "./FilterBar.module.scss";
+import { setCurrentPage } from "@/store/reducers/PagesSlice";
 
 export function FilterBar() {
   const dispatch = useAppDispatch();
 
   const { types } = useAppSelector((state) => state.typeReducer);
   const { statuses } = useAppSelector((state) => state.statusReducer);
-  const { currentPage } = useAppSelector((state) => state.pageReducer.page);
 
   const typeNames = types.map((type) => type.name);
   const statusNames = statuses.map((status) => status.name);
 
-  const [typeQueryParam, settypeQueryParamParam] = useState<
-    number | undefined
-  >();
-  const [statusQueryParam, setStatusQueryParam] = useState<
-    number | undefined
-  >();
-  const [userNameQueryParam, setUserNameQueryParam] = useState<
-    string | undefined
-  >();
-  const [createdAtQueryParam, setCreatedAtQueryParam] = useState<
-    string | undefined
-  >();
+  const {
+    typeId: typeQueryParam,
+    statusId: statusQueryParam,
+    userName: userNameQueryParam,
+    createdAt: createdAtQueryParam,
+  } = useAppSelector((state) => state.filterParamReducer.params);
 
   useEffect(() => {
-    console.log("change");
+    dispatch(setCurrentPage(1));
+
     dispatch(
       fetchRequestsThunk({
         limit: 13,
-        page: currentPage,
+        page: 1,
         typeId: typeQueryParam,
         statusId: statusQueryParam,
         userName: userNameQueryParam,
@@ -50,35 +45,17 @@ export function FilterBar() {
   return (
     <div className={styles.container}>
       <FieldSet
-        mode="radio"
         header="Тип обращения"
         valuesAray={typeNames}
-        setQueryParam={(value: number | undefined) =>
-          settypeQueryParamParam(value)
-        }
+        fieldName="type"
       />
       <FieldSet
-        mode="radio"
         header="Статус обращения"
         valuesAray={statusNames}
-        setQueryParam={(value: number | undefined) =>
-          setStatusQueryParam(value)
-        }
+        fieldName="status"
       />
-      <FieldSet
-        mode="input"
-        header="Пользователь"
-        setQueryParam={(value: string | undefined) =>
-          setUserNameQueryParam(value)
-        }
-      />
-      <FieldSet
-        mode="input"
-        header="Дата обращения"
-        setQueryParam={(value: string | undefined) =>
-          setCreatedAtQueryParam(value)
-        }
-      />
+      <FieldSet header="Пользователь" fieldName="userName" />
+      <FieldSet header="Дата обращения" fieldName="createdAt" />
     </div>
   );
 }

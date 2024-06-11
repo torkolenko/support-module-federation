@@ -1,0 +1,126 @@
+.placeholder {
+  font-size: 14.03px;
+  font-weight: 400;
+  line-height: 22.55px;
+  text-align: left;
+}
+
+.form {
+  padding: 47px 14px;
+  &__input {
+    height: 48px;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    padding: 0 12px;
+    font-size: 16px;
+    line-height: 18px;
+    font-weight: 600;
+    &::placeholder {
+      @extend .placeholder;
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  &__label {
+    position: absolute;
+    top: -9px;
+    left: 12px;
+    background-color: #fff;
+    padding: 0 4px;
+    color: rgba(0, 0, 0, 0.8);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    z-index: 4000;
+  }
+  &__container {
+    display: flex;
+    flex-flow: column nowrap;
+    position: relative;
+  }
+  &__select {
+    @extend .form__input;
+    margin-top: 26px;
+    font-size: 15px;
+    font-weight: 400px;
+    line-height: 22px;
+  }
+  &__textarea {
+    vertical-align: top;
+    height: 142px;
+    width: 100%;
+    margin-top: 15px;
+    padding-left: 16px;
+    border: 1px solid #e0e0e0;
+    resize: none;
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      @extend .placeholder;
+    }
+  }
+  &__h4 {
+    margin-top: 19px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    color: #000000;
+  }
+  &__img {
+    &-content {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      height: 26px;
+    }
+    &-btn {
+      height: 20px;
+      padding: 0;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    &-info {
+      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 14.03px;
+      font-weight: 400;
+      line-height: 22.55px;
+      color: rgba(0, 0, 0, 0.8);
+      border: 1px solid #e0e0e0;
+      padding: 5px;
+      border-radius: 5px;
+    }
+  }
+  &__submit-btns-container {
+    margin-top: 87px;
+    display: flex;
+    justify-content: center;
+    gap: 38px;
+  }
+}
+
+.validation__error {
+  color: #fd1e00;
+  margin-left: 5px;
+  margin-top: 2px;
+  font-weight: 200;
+  font-size: 10px;
+}
+
+.hidden {
+  opacity: 0;
+  height: 0;
+  width: 0;
+  line-height: 0;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+}

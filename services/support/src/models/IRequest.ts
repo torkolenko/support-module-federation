@@ -14,13 +14,6 @@ export interface IRequest {
   type: IRequestType;
 }
 
-export interface IRequestToPost {
-  userName: string;
-  description: string;
-  typeId: number;
-  image?: string;
-}
-
 export interface IRequestToGetAll {
   count: number;
   rows: IRequest[];

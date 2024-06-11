@@ -2,28 +2,33 @@ import RightArrow from "@/assets/rightArrow.svg";
 import LeftArrow from "@/assets/leftArrow.svg";
 import styles from "./NavBar.module.scss";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { useEffect, useState } from "react";
 import { setCurrentPage } from "@/store/reducers/PagesSlice";
 import { fetchRequestsThunk } from "@/store/reducers/ActionCreators";
+import buttonStyles from "@/components/shared/Button.module.scss";
 
-export function NavBar() {
+interface NavBarProps {
+  isModalActive: boolean;
+  setIsModalActive: (isActive: boolean) => void;
+}
+
+export function NavBar({ setIsModalActive }: NavBarProps) {
   const dispatch = useAppDispatch();
-  const { onePageRequestsLimit, requestsCount, currentPage } = useAppSelector(
+  const { pagesCount, currentPage } = useAppSelector(
     (state) => state.pageReducer.page
   );
 
-  const [pagesCount, setPagesCount] = useState(0);
-
-  useEffect(() => {
-    setPagesCount(Math.ceil(requestsCount / 13));
-  }, [requestsCount, setPagesCount]);
+  const filteredParams = useAppSelector(
+    (state) => state.filterParamReducer.params
+  );
 
   const changeCurrentPage = async (
     callback: (currentPage: number) => number
   ) => {
     const newPage = callback(currentPage);
 
-    await dispatch(fetchRequestsThunk({ limit: 13, page: newPage }));
+    await dispatch(
+      fetchRequestsThunk({ limit: 13, page: newPage, ...filteredParams })
+    );
 
     dispatch(setCurrentPage(newPage));
   };
@@ -43,7 +48,11 @@ export function NavBar() {
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.header__body}>
-          <button className={styles["header__body-post-button"]}>
+          <button
+            className={buttonStyles.button}
+            style={{ marginRight: "23px" }}
+            onClick={() => setIsModalActive(true)}
+          >
             Новый запрос
           </button>
           <div className={styles["header__body-pages"]}>

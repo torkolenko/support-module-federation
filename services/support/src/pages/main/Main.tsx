@@ -4,15 +4,19 @@ import {
   fetchStatusesThunk,
   fetchTypesThunk,
 } from "@/store/reducers/ActionCreators";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "./Main.module.scss";
 import { NavBar } from "@/components/navBar/NavBar";
 import { RequestsTable } from "@/components/table/RequestsTable";
 import { FilterBar } from "@/components/filterBar/FilterBar";
+import { RequestModal } from "@/components/requestModal/RequestModal";
+import { RequestForm } from "@/components/requestForm/RequestForm";
 
 function Main() {
   const dispatch = useAppDispatch();
+
+  const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(fetchRequestsThunk({ limit: 13 }));
@@ -21,13 +25,28 @@ function Main() {
   }, []);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <NavBar />
-        <RequestsTable />
+    <div>
+      <div className={styles.container}>
+        <div className={styles["filter-bar"]}>
+          <FilterBar />
+        </div>
+        <div className={styles.content}>
+          <NavBar
+            isModalActive={isModalActive}
+            setIsModalActive={(isActive: boolean) => setIsModalActive(isActive)}
+          />
+          <RequestsTable />
+        </div>
       </div>
-      <div className={styles["filter-bar"]}>
-        <FilterBar />
+      <div className={styles.content}>
+        <RequestModal
+          isActive={isModalActive}
+          setIsActive={(isActive: boolean) => setIsModalActive(isActive)}
+        >
+          <RequestForm
+            setIsModalActive={(isActive: boolean) => setIsModalActive(isActive)}
+          />
+        </RequestModal>
       </div>
     </div>
   );

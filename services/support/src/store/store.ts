@@ -3,12 +3,14 @@ import requestReducer from "./reducers/RequestSlice";
 import pageReducer from "./reducers/PagesSlice";
 import statusReducer from "./reducers/StatusesSlice";
 import typeReducer from "./reducers/TypesSlice";
+import filterParamReducer from "./reducers/FilterParamsSlice";
 
 const rootReducer = combineReducers({
   requestReducer,
   pageReducer,
   statusReducer,
   typeReducer,
+  filterParamReducer,
 });
 
 export const setupStore = () => {

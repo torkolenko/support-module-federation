@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { IRequestStatus } from "@/models/IRequestStatus";
 import { IRequestType } from "@/models/IRequestType";
 
@@ -7,26 +7,24 @@ import Search from "@/assets/search.svg";
 import { useCallback, useState } from "react";
 
 import styles from "./FieldSet.module.scss";
+import { setFilterParam } from "@/store/reducers/FilterParamsSlice";
+
+import buttonStyles from "@/components/shared/Button.module.scss";
 
 interface FieldSetProps {
   header: string;
   valuesAray?: string[];
-  mode: "radio" | "input";
-  setQueryParam?: (value: number | string) => void;
+  fieldName: string;
 }
 
-export function FieldSet({
-  mode,
-  header,
-  valuesAray,
-  setQueryParam,
-}: FieldSetProps) {
+export function FieldSet({ header, valuesAray, fieldName }: FieldSetProps) {
   const { types } = useAppSelector((state) => state.typeReducer);
   const { statuses } = useAppSelector((state) => state.statusReducer);
+  const dispatch = useAppDispatch();
 
   const [currentInputValue, setCurrentInputValue] = useState<string>("");
 
-  if (mode === "radio") {
+  if (fieldName === "type" || fieldName === "status") {
     valuesAray.push("Любой");
   }
 
@@ -34,7 +32,7 @@ export function FieldSet({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       let arrToFind: IRequestType[] | IRequestStatus[];
 
-      if (header === "Тип обращения") {
+      if (fieldName === "type") {
         arrToFind = types;
       } else {
         arrToFind = statuses;
@@ -44,9 +42,9 @@ export function FieldSet({
         (obj) => obj.name === e.target.value
       );
 
-      setQueryParam(requestTypeOrStatus?.id);
+      dispatch(setFilterParam({ [`${fieldName}Id`]: requestTypeOrStatus?.id }));
     },
-    [setQueryParam]
+    [setFilterParam, fieldName, types, statuses]
   );
 
   const handleInputChange = useCallback(
@@ -58,8 +56,8 @@ export function FieldSet({
 
   const handleInputReset = useCallback(() => {
     setCurrentInputValue(() => "");
-    setQueryParam(undefined);
-  }, [setCurrentInputValue, setQueryParam]);
+    dispatch(setFilterParam({ [fieldName]: undefined }));
+  }, [setCurrentInputValue, setFilterParam]);
 
   const handleInputSubmit = useCallback(() => {
     let newQueryParam: string | undefined = currentInputValue;
@@ -67,8 +65,8 @@ export function FieldSet({
     if (currentInputValue === "") {
       newQueryParam = undefined;
     }
-    setQueryParam(newQueryParam);
-  }, [setQueryParam, currentInputValue]);
+    dispatch(setFilterParam({ [fieldName]: newQueryParam }));
+  }, [setFilterParam, currentInputValue, fieldName]);
 
   const handleInputKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -86,7 +84,7 @@ export function FieldSet({
           <h4 className={styles.legend__header}>{header}</h4>
         </div>
       </legend>
-      {mode === "radio" &&
+      {(fieldName === "type" || fieldName === "status") &&
         valuesAray.length &&
         valuesAray.map((value) => {
           return (
@@ -96,7 +94,7 @@ export function FieldSet({
                   type="radio"
                   id={value}
                   value={value}
-                  name={header}
+                  name={fieldName}
                   onChange={handleRadioChange}
                   className={styles["fieldset__body-item-radio"]}
                 />
@@ -110,25 +108,28 @@ export function FieldSet({
             </div>
           );
         })}
-      {mode === "input" && (
+      {(fieldName === "userName" || fieldName === "createdAt") && (
         <div className={styles["fieldset__body-item-container"]}>
           <input
             type={header === "Пользователь" ? "text" : "date"}
             value={currentInputValue}
+            name={fieldName}
             onChange={handleInputChange}
             onKeyDown={handleInputKeyDown}
             className={styles["fieldset__body-item-input"]}
           />
           <button
             onClick={handleInputSubmit}
-            className={`${styles["fieldset__body-item-svg-btn"]} ${styles["ml-2"]}`}
+            className={`${buttonStyles["svg-btn"]} ${styles["ml-2"]}`}
+            type="button"
           >
             <Search fill="#0a8fdc" height={14} width={14} />
           </button>
 
           <button
             onClick={handleInputReset}
-            className={styles["fieldset__body-item-svg-btn"]}
+            className={buttonStyles["svg-btn"]}
+            type="reset"
           >
             <Cross fill="#fd1e00" height={10} width={10} />
           </button>

@@ -10,7 +10,7 @@ interface PageState {
 const initialState: PageState = {
   page: {
     onePageRequestsLimit: 20,
-    requestsCount: 1,
+    pagesCount: 1,
     currentPage: 1,
   },
   isLoading: false,
@@ -21,8 +21,8 @@ export const PagesSlice = createSlice({
   name: "page",
   initialState,
   reducers: {
-    setRequestsCount(state, action: PayloadAction<number>) {
-      state.page.requestsCount = action.payload;
+    setPagesCount(state, action: PayloadAction<number>) {
+      state.page.pagesCount = action.payload;
     },
     setCurrentPage(state, action: PayloadAction<number>) {
       state.page.currentPage = action.payload;
@@ -32,4 +32,4 @@ export const PagesSlice = createSlice({
 
 export default PagesSlice.reducer;
 
-export const { setRequestsCount, setCurrentPage } = PagesSlice.actions;
+export const { setPagesCount, setCurrentPage } = PagesSlice.actions;

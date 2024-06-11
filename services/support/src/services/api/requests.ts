@@ -3,7 +3,6 @@ import { axiosConfig } from "./axiosConfig";
 import {
   IRequest,
   IRequestToGetAll,
-  IRequestToPost,
   fetchRequestsQueryParams,
 } from "@/models/IRequest";
 
@@ -26,7 +25,7 @@ export function getRequestById(id: number) {
   return axiosConfig<IRequest>(reqParams);
 }
 
-export function postRequest(requestData: IRequestToPost) {
+export function postRequest(requestData: FormData) {
   const reqParams = {
     method: "post",
     url: endpoints.REQUESTS,
