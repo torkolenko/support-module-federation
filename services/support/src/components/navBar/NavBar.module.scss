@@ -3,10 +3,7 @@
   min-width: 300px;
   top: 0;
   left: 0;
-  z-index: 50;
   &__body {
-    position: relative;
-    z-index: 2;
     display: flex;
     justify-content: end;
     height: 60px;

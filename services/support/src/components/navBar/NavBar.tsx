@@ -8,10 +8,10 @@ import buttonStyles from "@/components/shared/Button.module.scss";
 
 interface NavBarProps {
   isModalActive: boolean;
-  setIsModalActive: (isActive: boolean) => void;
+  openModal: () => void;
 }
 
-export function NavBar({ setIsModalActive }: NavBarProps) {
+export function NavBar({ openModal }: NavBarProps) {
   const dispatch = useAppDispatch();
   const { pagesCount, currentPage } = useAppSelector(
     (state) => state.pageReducer.page
@@ -51,7 +51,7 @@ export function NavBar({ setIsModalActive }: NavBarProps) {
           <button
             className={buttonStyles.button}
             style={{ marginRight: "23px" }}
-            onClick={() => setIsModalActive(true)}
+            onClick={() => openModal()}
           >
             Новый запрос
           </button>

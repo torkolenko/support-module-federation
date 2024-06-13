@@ -1,31 +1,98 @@
+import { useEffect, useRef } from "react";
 import styles from "./RequestModal.module.scss";
+import Cross from "@/assets/cross.svg";
+import { Transition, TransitionStatus } from "react-transition-group";
 
 interface RequestModalProps {
   isActive: boolean;
-  setIsActive: (isActive: boolean) => void;
+  closeModal: () => void;
   children: string | JSX.Element | JSX.Element[];
 }
 
+const duration = 400;
+
+const defaultStyle = {
+  transition: `opacity ${duration}ms ease-in-out`,
+  opacity: 0,
+};
+
+const transitionStyles: Partial<Record<TransitionStatus, React.CSSProperties>> =
+  {
+    entering: { opacity: 1 },
+    entered: { opacity: 1 },
+    exiting: { opacity: 0 },
+    exited: { opacity: 0 },
+  };
+
 export const RequestModal = ({
+  closeModal,
   isActive,
-  setIsActive,
   children,
 }: RequestModalProps) => {
+  const nodeRef = useRef(null);
+
+  useEffect(() => {
+    document.addEventListener("keydown", onKeydown);
+    return () => document.removeEventListener("keydown", onKeydown);
+  });
+
+  useEffect(() => {
+    if (isActive) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isActive]);
+
+  const onKeydown = (e: KeyboardEvent) => {
+    switch (e.key) {
+      case "Escape":
+        closeModal();
+        break;
+    }
+  };
+
   return (
-    <div
-      className={isActive ? styles["active-modal"] : styles.modal}
-      onClick={() => {
-        setIsActive(false);
-      }}
-    >
-      <div
-        className={
-          isActive ? styles["active-modal__content"] : styles.modal__content
-        }
-        onClick={(e) => e.stopPropagation()}
+    <>
+      <Transition
+        nodeRef={nodeRef}
+        in={isActive}
+        timeout={duration}
+        unmountOnExit
+        mountOnEnter
       >
-        {isActive && children}
-      </div>
-    </div>
+        {(state) => (
+          <div
+            ref={nodeRef}
+            className={styles.modal}
+            style={{
+              ...defaultStyle,
+              ...transitionStyles[state],
+            }}
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+              if (e.target instanceof HTMLElement) {
+                if (!e.target.closest("#modal-content")) {
+                  closeModal();
+                }
+              }
+            }}
+          >
+            <div className={styles.modal__wrapper}>
+              <div className={styles.modal__content} id="modal-content">
+                <button
+                  className={styles.modal__close}
+                  onClick={() => {
+                    closeModal();
+                  }}
+                >
+                  <Cross height={14} width={14} />
+                </button>
+                {children}
+              </div>
+            </div>
+          </div>
+        )}
+      </Transition>
+    </>
   );
 };

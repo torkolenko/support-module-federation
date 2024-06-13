@@ -6,7 +6,8 @@
 }
 
 .form {
-  padding: 47px 14px;
+  width: 42vw;
+  max-width: 800px;
   &__input {
     height: 48px;
     width: 100%;
@@ -19,7 +20,7 @@
       @extend .placeholder;
     }
     &:focus {
-      outline: none;
+      background-color: #fff;
     }
   }
   &__label {
@@ -32,7 +33,7 @@
     font-weight: 400;
     font-size: 12px;
     line-height: 18px;
-    z-index: 4000;
+    z-index: 1;
   }
   &__container {
     display: flex;
@@ -54,9 +55,9 @@
     padding-left: 16px;
     border: 1px solid #e0e0e0;
     resize: none;
-    &:focus {
-      outline: none;
-    }
+    // &:focus {
+    //   outline: none;
+    // }
     &::placeholder {
       @extend .placeholder;
     }
@@ -100,7 +101,7 @@
     }
   }
   &__submit-btns-container {
-    margin-top: 87px;
+    margin-top: 47px;
     display: flex;
     justify-content: center;
     gap: 38px;

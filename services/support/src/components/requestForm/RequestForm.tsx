@@ -9,10 +9,10 @@ import buttonStyles from "@/components/shared/Button.module.scss";
 import Cross from "@/assets/cross.svg";
 
 interface NavBarProps {
-  setIsModalActive: (isActive: boolean) => void;
+  closeModal: () => void;
 }
 
-export function RequestForm({ setIsModalActive }: NavBarProps) {
+export function RequestForm({ closeModal }: NavBarProps) {
   const { currentPage } = useAppSelector((state) => state.pageReducer.page);
 
   const filteredParams = useAppSelector(
@@ -175,7 +175,7 @@ export function RequestForm({ setIsModalActive }: NavBarProps) {
             ...filteredParams,
           })
         );
-        setIsModalActive(false);
+        closeModal();
       } catch (e) {
         console.log(e);
       }
@@ -288,7 +288,7 @@ export function RequestForm({ setIsModalActive }: NavBarProps) {
           className={buttonStyles.button}
           style={{ width: "109px" }}
           type="button"
-          onClick={() => setIsModalActive(false)}
+          onClick={() => closeModal()}
         >
           Закрыть
         </button>

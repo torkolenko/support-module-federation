@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { useAppDispatch } from "@/hooks/redux";
 import {
   fetchRequestsThunk,
   fetchStatusesThunk,
@@ -25,30 +25,28 @@ function Main() {
   }, []);
 
   return (
-    <div>
-      <div className={styles.container}>
-        <div className={styles["filter-bar"]}>
-          <FilterBar />
-        </div>
-        <div className={styles.content}>
-          <NavBar
-            isModalActive={isModalActive}
-            setIsModalActive={(isActive: boolean) => setIsModalActive(isActive)}
-          />
-          <RequestsTable />
+    <>
+      <div>
+        <div className={styles.container}>
+          <div className={styles["filter-bar"]}>
+            <FilterBar />
+          </div>
+          <div className={styles.content}>
+            <NavBar
+              isModalActive={isModalActive}
+              openModal={() => setIsModalActive(true)}
+            />
+            <RequestsTable />
+          </div>
         </div>
       </div>
-      <div className={styles.content}>
-        <RequestModal
-          isActive={isModalActive}
-          setIsActive={(isActive: boolean) => setIsModalActive(isActive)}
-        >
-          <RequestForm
-            setIsModalActive={(isActive: boolean) => setIsModalActive(isActive)}
-          />
-        </RequestModal>
-      </div>
-    </div>
+      <RequestModal
+        isActive={isModalActive}
+        closeModal={() => setIsModalActive(false)}
+      >
+        <RequestForm closeModal={() => setIsModalActive(false)} />
+      </RequestModal>
+    </>
   );
 }
 

@@ -19,10 +19,11 @@ export const Dropdown = ({
 
   const handleDropdownItemClick = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
-      const liEventTarget = e.target as HTMLElement;
-      setSelectedValue(liEventTarget.innerText);
-      setDropdownListVisible(false);
-      buttonRef.current.focus();
+      if (e.target instanceof HTMLElement) {
+        setSelectedValue(e.target.innerText);
+        setDropdownListVisible(false);
+        buttonRef.current.focus();
+      }
     },
     []
   );
