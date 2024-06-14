@@ -1,7 +1,7 @@
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router/Router";
-import "./reset.scss";
+import "@packages/shared/src/reset.scss";
 
 const root = document.getElementById("root");
 
