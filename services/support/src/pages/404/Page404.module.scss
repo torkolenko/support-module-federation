@@ -1,0 +1,26 @@
+.page404 {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 0;
+
+  &__header {
+    font-size: 60px;
+    font-weight: 500;
+  }
+  &__content {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 400;
+  }
+  &__link {
+    margin-top: 4px;
+    color: black;
+    font-size: 15px;
+    font-weight: 500;
+  }
+}

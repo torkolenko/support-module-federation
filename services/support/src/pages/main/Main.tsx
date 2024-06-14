@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   fetchRequestsThunk,
   fetchStatusesThunk,
@@ -15,6 +15,9 @@ import { RequestForm } from "@/components/requestForm/RequestForm";
 
 function Main() {
   const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector(
+    (state) => state.requestReducer
+  );
 
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
 
