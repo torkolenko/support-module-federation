@@ -43,7 +43,6 @@ export const fetchRequestsThunk = createAsyncThunk(
       dispatch(setPagesCount(pagesCount));
 
       const newPage = queryParams.page || 1;
-
       dispatch(setCurrentPage(newPage));
 
       dispatch(setFiltering(false));

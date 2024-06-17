@@ -7,22 +7,14 @@ import { fetchRequestsThunk } from "@/store/reducers/ActionCreators";
 import { Dropdown } from "../dropdown/Dropdown";
 import buttonStyles from "@/components/shared/Button.module.scss";
 import Cross from "@/assets/cross.svg";
+import { Spinner } from "../shared/spinner/Spinner";
 
 interface NavBarProps {
   closeModal: () => void;
+  setDisabledExit: (isDisabled: boolean) => void;
 }
 
-export function RequestForm({ closeModal }: NavBarProps) {
-  const { currentPage } = useAppSelector((state) => state.pageReducer.page);
-
-  const filteredParams = useAppSelector(
-    (state) => state.filterParamReducer.params
-  );
-
-  const { types } = useAppSelector((state) => state.typeReducer);
-  const typeNames = types.map((type) => type.name);
-  const dispatch = useAppDispatch();
-
+export function RequestForm({ closeModal, setDisabledExit }: NavBarProps) {
   const USER_TOUCHED_ERROR = "Имя пользователя не может быть пустым";
   const USER_MINLENGTH_ERROR = "Имя должно состоять минимум из двух букв";
   const USER_CONTENT_ERROR =
@@ -32,6 +24,18 @@ export function RequestForm({ closeModal }: NavBarProps) {
   const DESCRIPTION_FIELD_NAME = "description";
   const USER_FIELD_NAME = "user";
   const TYPE_FIELD_NAME = "type";
+
+  const dispatch = useAppDispatch();
+
+  const [isUploadingRequest, setUploadingRequest] = useState<boolean>(false);
+  const { currentPage } = useAppSelector((state) => state.pageReducer.page);
+
+  const filteredParams = useAppSelector(
+    (state) => state.filterParamReducer.params
+  );
+
+  const { types } = useAppSelector((state) => state.typeReducer);
+  const typeNames = types.map((type) => type.name);
 
   const [userName, setUserName] = useState<string>("");
   const [userTouched, setUserTouched] = useState<boolean>(false);
@@ -167,6 +171,9 @@ export function RequestForm({ closeModal }: NavBarProps) {
         formData.append("image", uploadFile);
       }
       try {
+        setDisabledExit(true);
+        setUploadingRequest(true);
+
         await postRequest(formData);
         await dispatch(
           fetchRequestsThunk({
@@ -177,7 +184,8 @@ export function RequestForm({ closeModal }: NavBarProps) {
         );
         closeModal();
       } catch (e) {
-        console.log(e);
+        setDisabledExit(false);
+        setUploadingRequest(false);
       }
     },
     [uploadFile, selectedType, types, userName, description, uploadFile]
@@ -203,6 +211,7 @@ export function RequestForm({ closeModal }: NavBarProps) {
         </label>
         <div style={{ height: "63px" }}>
           <input
+            disabled={isUploadingRequest}
             placeholder="Введите имя автора обращения"
             id={USER_FIELD_NAME}
             className={styles.form__input}
@@ -222,6 +231,7 @@ export function RequestForm({ closeModal }: NavBarProps) {
           Тип запроса
         </label>
         <Dropdown
+          isDisabled={isUploadingRequest}
           liArray={typeNames}
           selectedValue={selectedType}
           setSelectedValue={(typeName: string) => setSelectedType(typeName)}
@@ -230,6 +240,7 @@ export function RequestForm({ closeModal }: NavBarProps) {
       <h4 className={styles["form__h4"]}>Добавить описание</h4>
       <div style={{ height: "175px" }}>
         <textarea
+          disabled={isUploadingRequest}
           className={styles.form__textarea}
           value={description}
           name={DESCRIPTION_FIELD_NAME}
@@ -251,6 +262,7 @@ export function RequestForm({ closeModal }: NavBarProps) {
           <Plus fill="#615E5E" height={20} width={20} />
         </button>
         <input
+          disabled={isUploadingRequest}
           ref={filePicker}
           key={fileInputKey}
           className={styles.hidden}
@@ -262,6 +274,7 @@ export function RequestForm({ closeModal }: NavBarProps) {
           <div className={styles["form__img-info"]}>
             {cutFileName(uploadFile.name, 18)}
             <button
+              disabled={isUploadingRequest}
               onClick={() => {
                 setFileInputKey(fileInputKey + 1);
                 setUploadFile(null);
@@ -278,17 +291,24 @@ export function RequestForm({ closeModal }: NavBarProps) {
       <div className={styles["form__submit-btns-container"]}>
         <button
           className={buttonStyles.button}
-          style={{ width: "123px" }}
-          disabled={!isFormValid}
+          style={{ width: "122px", position: "relative" }}
+          disabled={!isFormValid || isUploadingRequest}
           type="submit"
         >
-          Сохранить
+          {isUploadingRequest ? (
+            <div className={styles["form__submit-btns-spinner"]}>
+              <Spinner color={"white"} diameterInPx={20} thiknessInPx={3} />
+            </div>
+          ) : (
+            "Сохранить"
+          )}
         </button>
         <button
           className={buttonStyles.button}
           style={{ width: "109px" }}
           type="button"
           onClick={() => closeModal()}
+          disabled={isUploadingRequest}
         >
           Закрыть
         </button>

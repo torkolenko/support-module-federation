@@ -101,11 +101,18 @@
       border-radius: 5px;
     }
   }
-  &__submit-btns-container {
-    margin-top: 47px;
-    display: flex;
-    justify-content: center;
-    gap: 38px;
+  &__submit-btns {
+    &-container {
+      margin-top: 47px;
+      display: flex;
+      justify-content: center;
+      gap: 38px;
+    }
+    &-spinner {
+      position: absolute;
+      top: 10px;
+      left: 51px;
+    }
   }
 }
 

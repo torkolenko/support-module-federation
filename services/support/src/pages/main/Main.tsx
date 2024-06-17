@@ -36,6 +36,7 @@ function Main() {
   }
 
   const [isModalActive, setIsModalActive] = useState<boolean>(false);
+  const [isDisabledModalExit, setDisabledModalExit] = useState<boolean>(false);
   const [isDataLoading, setDataLoading] = useState<boolean>(true);
 
   const setFirstState = async () => {
@@ -101,10 +102,16 @@ function Main() {
         </div>
       </div>
       <RequestModal
+        isDisabledExit={isDisabledModalExit}
         isActive={isModalActive}
         closeModal={() => setIsModalActive(false)}
       >
-        <RequestForm closeModal={() => setIsModalActive(false)} />
+        <RequestForm
+          closeModal={() => setIsModalActive(false)}
+          setDisabledExit={(isDisabled: boolean) =>
+            setDisabledModalExit(isDisabled)
+          }
+        />
       </RequestModal>
     </>
   );

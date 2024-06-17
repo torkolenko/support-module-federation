@@ -5,12 +5,14 @@ interface DropdownProps {
   liArray: string[];
   selectedValue: string;
   setSelectedValue: (value: string) => void;
+  isDisabled?: boolean;
 }
 
 export const Dropdown = ({
   liArray,
   selectedValue,
   setSelectedValue,
+  isDisabled = false,
 }: DropdownProps) => {
   const buttonRef = useRef(null);
 
@@ -35,6 +37,7 @@ export const Dropdown = ({
         ref={buttonRef}
         className={styles.dropdown__button}
         onClick={() => setDropdownListVisible(!isDropdownListVisible)}
+        disabled={isDisabled}
       >
         {selectedValue}
       </button>

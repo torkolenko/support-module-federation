@@ -48,7 +48,7 @@ export function TableRow({ request }: TableRowProps) {
             updatedRequest.current = response.data;
             setIsModalActive(true);
           } catch (e) {
-            console.log(e);
+            console.log("aaa", e);
           }
         }}
       >

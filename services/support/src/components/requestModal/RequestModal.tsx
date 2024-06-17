@@ -6,6 +6,7 @@ import { Transition, TransitionStatus } from "react-transition-group";
 interface RequestModalProps {
   isActive: boolean;
   closeModal: () => void;
+  isDisabledExit: boolean;
   children: string | JSX.Element | JSX.Element[];
 }
 
@@ -27,6 +28,7 @@ const transitionStyles: Partial<Record<TransitionStatus, React.CSSProperties>> =
 export const RequestModal = ({
   closeModal,
   isActive,
+  isDisabledExit,
   children,
 }: RequestModalProps) => {
   const nodeRef = useRef(null);
@@ -47,7 +49,9 @@ export const RequestModal = ({
   const onKeydown = (e: KeyboardEvent) => {
     switch (e.key) {
       case "Escape":
-        closeModal();
+        if (!isDisabledExit) {
+          closeModal();
+        }
         break;
     }
   };
@@ -71,7 +75,7 @@ export const RequestModal = ({
             }}
             onClick={(e: React.MouseEvent<HTMLDivElement>) => {
               if (e.target instanceof HTMLElement) {
-                if (!e.target.closest("#modal-content")) {
+                if (!e.target.closest("#modal-content") && !isDisabledExit) {
                   closeModal();
                 }
               }
@@ -82,7 +86,9 @@ export const RequestModal = ({
                 <button
                   className={styles.modal__close}
                   onClick={() => {
-                    closeModal();
+                    if (!isDisabledExit) {
+                      closeModal();
+                    }
                   }}
                 >
                   <Cross height={14} width={14} />
