@@ -3,14 +3,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface FilterParamState {
   params: IFilterParams;
-  isLoading: boolean;
-  error: string;
+  isFiltering: boolean;
 }
 
 const initialState: FilterParamState = {
   params: {},
-  isLoading: false,
-  error: "",
+  isFiltering: false,
 };
 
 export const FilterParamsSlice = createSlice({
@@ -20,9 +18,12 @@ export const FilterParamsSlice = createSlice({
     setFilterParam(state, action: PayloadAction<IFilterParams>) {
       state.params = { ...state.params, ...action.payload };
     },
+    setFiltering(state, action: PayloadAction<boolean>) {
+      state.isFiltering = action.payload;
+    },
   },
 });
 
 export default FilterParamsSlice.reducer;
 
-export const { setFilterParam } = FilterParamsSlice.actions;
+export const { setFilterParam, setFiltering } = FilterParamsSlice.actions;

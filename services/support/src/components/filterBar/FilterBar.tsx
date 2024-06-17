@@ -5,6 +5,7 @@ import { fetchRequestsThunk } from "@/store/reducers/ActionCreators";
 
 import styles from "./FilterBar.module.scss";
 import { setCurrentPage } from "@/store/reducers/PagesSlice";
+import { setFiltering } from "@/store/reducers/FilterParamsSlice";
 
 export function FilterBar() {
   const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ export function FilterBar() {
     if (!firstRender.current) {
       firstRender.current = true;
     } else {
+      dispatch(setFiltering(true));
       dispatch(
         fetchRequestsThunk({
           limit: 13,

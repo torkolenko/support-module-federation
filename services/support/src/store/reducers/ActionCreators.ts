@@ -4,6 +4,7 @@ import { getAllStatuses } from "@/services/api/statuses";
 import { getAllTypes } from "@/services/api/types";
 import { fetchRequestsQueryParams } from "@/models/IRequest";
 import { setCurrentPage, setPagesCount } from "./PagesSlice";
+import { setFiltering } from "./FilterParamsSlice";
 
 export const fetchTypesThunk = createAsyncThunk(
   "type/fetchAll",
@@ -38,12 +39,14 @@ export const fetchRequestsThunk = createAsyncThunk(
     try {
       const response = await getAllRequests(queryParams);
 
-      const pagesCount = Math.ceil(response.data.count / 13);
+      const pagesCount = Math.ceil(response.data.count / 13) || 1;
       dispatch(setPagesCount(pagesCount));
 
       const newPage = queryParams.page || 1;
 
       dispatch(setCurrentPage(newPage));
+
+      dispatch(setFiltering(false));
 
       return response.data.rows;
     } catch (e) {

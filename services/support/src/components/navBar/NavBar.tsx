@@ -2,7 +2,6 @@ import RightArrow from "@/assets/rightArrow.svg";
 import LeftArrow from "@/assets/leftArrow.svg";
 import styles from "./NavBar.module.scss";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { setCurrentPage } from "@/store/reducers/PagesSlice";
 import { fetchRequestsThunk } from "@/store/reducers/ActionCreators";
 import buttonStyles from "@/components/shared/Button.module.scss";
 
@@ -16,6 +15,7 @@ export function NavBar({ openModal }: NavBarProps) {
   const { pagesCount, currentPage } = useAppSelector(
     (state) => state.pageReducer.page
   );
+  const { isFiltering } = useAppSelector((state) => state.filterParamReducer);
 
   const filteredParams = useAppSelector(
     (state) => state.filterParamReducer.params
@@ -24,13 +24,15 @@ export function NavBar({ openModal }: NavBarProps) {
   const changeCurrentPage = async (
     callback: (currentPage: number) => number
   ) => {
-    const newPage = callback(currentPage);
+    let newPage = callback(currentPage);
+
+    if (isFiltering) {
+      newPage = 1;
+    }
 
     await dispatch(
       fetchRequestsThunk({ limit: 13, page: newPage, ...filteredParams })
     );
-
-    dispatch(setCurrentPage(newPage));
   };
 
   let isDisabledRight = false;
