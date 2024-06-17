@@ -7,9 +7,6 @@ interface RequestCardProps {
 }
 
 export const RequestCard = ({ request }: RequestCardProps) => {
-  const [isDescriptionDetailed, setDescriptionDetailed] =
-    useState<boolean>(false);
-
   const { id, type, description, userName, createdAt, status, image } = request;
   const formatCreatedAt = createdAt
     .split("T")[0]
@@ -50,7 +47,7 @@ export const RequestCard = ({ request }: RequestCardProps) => {
         }
 
         return (
-          <div className={styles["card__option"]}>
+          <div key={value[0]} className={styles["card__option"]}>
             <div className={styles["card__option-property"]}>{value[0]}</div>
             <div className={classNames.join(" ")}>{value[1]}</div>
             <div className={styles["card__points"]}></div>

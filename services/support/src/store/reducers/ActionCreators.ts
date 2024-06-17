@@ -3,7 +3,7 @@ import { getAllRequests } from "@/services/api/requests";
 import { getAllStatuses } from "@/services/api/statuses";
 import { getAllTypes } from "@/services/api/types";
 import { fetchRequestsQueryParams } from "@/models/IRequest";
-import { setPagesCount } from "./PagesSlice";
+import { setCurrentPage, setPagesCount } from "./PagesSlice";
 
 export const fetchTypesThunk = createAsyncThunk(
   "type/fetchAll",
@@ -40,6 +40,10 @@ export const fetchRequestsThunk = createAsyncThunk(
 
       const pagesCount = Math.ceil(response.data.count / 13);
       dispatch(setPagesCount(pagesCount));
+
+      const newPage = queryParams.page || 1;
+
+      dispatch(setCurrentPage(newPage));
 
       return response.data.rows;
     } catch (e) {

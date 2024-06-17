@@ -23,3 +23,26 @@
   max-width: 1807px;
   flex-grow: 1;
 }
+
+.spinner__container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-content__container {
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  font-size: 24px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}

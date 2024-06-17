@@ -1,3 +1,4 @@
+import { useAppSelector } from "@/hooks/redux";
 import styles from "./TableItem.module.scss";
 
 interface TableItemProps {
@@ -7,6 +8,8 @@ interface TableItemProps {
 }
 
 export function TableItem({ value, mode }: TableItemProps) {
+  let { isLoading } = useAppSelector((state) => state.requestReducer);
+
   let classNames: [string] = [styles.table__item];
 
   if (mode === "type") {
@@ -47,7 +50,12 @@ export function TableItem({ value, mode }: TableItemProps) {
 
   return (
     <td>
-      <div className={classNames.join(" ")}>{value}</div>
+      <div
+        className={classNames.join(" ")}
+        style={{ opacity: isLoading ? 0.2 : 1 }}
+      >
+        {value}
+      </div>
     </td>
   );
 }

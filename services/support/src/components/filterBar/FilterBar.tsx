@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { FieldSet } from "./fieldSet/FieldSet";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { fetchRequestsThunk } from "@/store/reducers/ActionCreators";
 
 import styles from "./FilterBar.module.scss";
@@ -8,6 +8,7 @@ import { setCurrentPage } from "@/store/reducers/PagesSlice";
 
 export function FilterBar() {
   const dispatch = useAppDispatch();
+  const firstRender = useRef(false);
 
   const { types } = useAppSelector((state) => state.typeReducer);
   const { statuses } = useAppSelector((state) => state.statusReducer);
@@ -23,24 +24,32 @@ export function FilterBar() {
   } = useAppSelector((state) => state.filterParamReducer.params);
 
   useEffect(() => {
-    dispatch(setCurrentPage(1));
-
-    dispatch(
-      fetchRequestsThunk({
-        limit: 13,
-        page: 1,
-        typeId: typeQueryParam,
-        statusId: statusQueryParam,
-        userName: userNameQueryParam,
-        createdAt: createdAtQueryParam,
-      })
-    );
+    if (!firstRender.current) {
+      firstRender.current = true;
+    } else {
+      dispatch(
+        fetchRequestsThunk({
+          limit: 13,
+          page: 1,
+          typeId: typeQueryParam,
+          statusId: statusQueryParam,
+          userName: userNameQueryParam,
+          createdAt: createdAtQueryParam,
+        })
+      );
+    }
   }, [
     typeQueryParam,
     statusQueryParam,
     userNameQueryParam,
     createdAtQueryParam,
   ]);
+
+  useEffect(() => {
+    return () => {
+      firstRender.current = null;
+    };
+  }, []);
 
   return (
     <div className={styles.container}>

@@ -88,7 +88,10 @@ export function FieldSet({ header, valuesAray, fieldName }: FieldSetProps) {
         valuesAray.length &&
         valuesAray.map((value) => {
           return (
-            <div className={styles["fieldset__body-item-container"]}>
+            <div
+              key={value}
+              className={styles["fieldset__body-item-container"]}
+            >
               <span className={styles["fieldset__body-item"]}>
                 <input
                   type="radio"
